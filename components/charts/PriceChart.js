@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import {
   ResponsiveContainer,
   AreaChart,
@@ -20,6 +21,16 @@ import {
  * @param {{ data: Array<{ date: string, close: number }> }} props
  */
 export default function PriceChart({ data }) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return <div className="w-full h-[280px] bg-zinc-900/10 border border-zinc-900 rounded-2xl animate-pulse" />;
+  }
+
   if (!data || data.length === 0) {
     return (
       <div className="h-64 flex items-center justify-center border border-zinc-800 rounded-2xl bg-zinc-900/30 text-zinc-500">
@@ -29,10 +40,10 @@ export default function PriceChart({ data }) {
   }
 
   return (
-    <div className="w-full h-full bg-zinc-900/20 border border-zinc-800 rounded-2xl p-5 backdrop-blur-sm flex flex-col justify-between">
-      <div className="h-56 w-full flex-1">
+    <div className="w-full h-[280px] bg-zinc-900/20 border border-zinc-800 rounded-2xl p-5 backdrop-blur-sm flex flex-col justify-between">
+      <div className="h-full w-full">
         <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={data} margin={{ top: 5, right: 5, left: -30, bottom: 0 }}>
+          <AreaChart data={data} margin={{ top: 5, right: 5, left: -25, bottom: 0 }}>
             <defs>
               <linearGradient id="colorPrice" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor="#10b981" stopOpacity={0.2}/>
