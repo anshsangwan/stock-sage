@@ -43,7 +43,7 @@ export default function Navbar() {
                   price: `$${metrics.currentPrice.toFixed(2)}`,
                   change: `${metrics.regularMarketChangePercent >= 0 ? '+' : ''}${metrics.regularMarketChangePercent.toFixed(2)}%`,
                   isPositive: metrics.regularMarketChangePercent >= 0,
-                  score: metrics.peRatio ? `${Math.round(metrics.peRatio)}%` : '85%'
+                  score: metrics.peRatio ? `${Math.round(metrics.peRatio)}x` : '25x'
                 };
               }
             } catch (err) {
@@ -56,7 +56,7 @@ export default function Navbar() {
               price: ticker === 'AAPL' ? '$189.84' : ticker === 'TSLA' ? '$176.55' : '$875.12',
               change: ticker === 'TSLA' ? '-2.15%' : ticker === 'AAPL' ? '+1.24%' : '+4.82%',
               isPositive: ticker !== 'TSLA',
-              score: ticker === 'AAPL' ? '88%' : ticker === 'TSLA' ? '72%' : '94%'
+              score: ticker === 'AAPL' ? '28x' : ticker === 'TSLA' ? '72x' : '94x'
             };
           })
         );
