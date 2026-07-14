@@ -69,6 +69,22 @@ export default function ReportPage({ params }) {
     fetchReport();
   }, [id, apiKey]);
 
+  // Save successfully loaded report to localStorage for recent searches history
+  useEffect(() => {
+    if (report && report.id) {
+      try {
+        const history = JSON.parse(localStorage.getItem('stockSage_history') || '[]');
+        const updated = [
+          { id: report.id, ticker: report.ticker, companyName: report.companyName },
+          ...history.filter(item => item.id !== report.id)
+        ].slice(0, 10); // Limit to last 10 items
+        localStorage.setItem('stockSage_history', JSON.stringify(updated));
+      } catch (e) {
+        console.error('Failed to save to localStorage:', e);
+      }
+    }
+  }, [report]);
+
   if (loading) {
     return (
       <div className="min-h-screen bg-[#0a0a0a] text-zinc-100 p-8 flex items-center justify-center">

@@ -83,19 +83,15 @@ export default function Navbar() {
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, [pathname]);
 
-  // Fetch recent searches from reports database
+  // Load recent searches from browser localStorage
   useEffect(() => {
-    if (!apiKey) return;
-    fetch('/api/reports', {
-      headers: { 'x-api-key': apiKey }
-    })
-      .then(res => res.json())
-      .then(data => {
-        // Get unique tickers or last 4 searches
-        setRecentSearches(data.reports || []);
-      })
-      .catch(() => {});
-  }, [apiKey, pathname]);
+    try {
+      const history = JSON.parse(localStorage.getItem('stockSage_history') || '[]');
+      setRecentSearches(history);
+    } catch (e) {
+      setRecentSearches([]);
+    }
+  }, [pathname]);
 
   if (pathname === '/login') return null;
 
