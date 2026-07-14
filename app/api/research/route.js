@@ -12,7 +12,8 @@ import { researchGraph } from '@/lib/agent/graph';
  */
 export async function POST(request) {
   try {
-    const apiKey = request.headers.get('x-api-key');
+    const headerKey = request.headers.get('x-api-key');
+    const apiKey = process.env.GEMINI_API_KEY || process.env.NEXT_PUBLIC_GEMINI_API_KEY || headerKey;
     if (!apiKey) {
       return NextResponse.json({ error: 'Missing API key' }, { status: 401 });
     }

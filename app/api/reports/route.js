@@ -20,7 +20,8 @@ import {
  */
 export async function GET(request) {
   try {
-    const apiKey = request.headers.get('x-api-key');
+    const headerKey = request.headers.get('x-api-key');
+    const apiKey = process.env.GEMINI_API_KEY || process.env.NEXT_PUBLIC_GEMINI_API_KEY || headerKey;
 
     if (!apiKey) {
       return NextResponse.json(

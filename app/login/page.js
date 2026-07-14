@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useApiKey } from '@/lib/hooks/useApiKey';
 
@@ -9,8 +9,14 @@ export default function LoginPage() {
   const [remember, setRemember] = useState(false);
   const [error, setError] = useState('');
   const [isShaking, setIsShaking] = useState(false);
-  const { setApiKey } = useApiKey();
+  const { apiKey, setApiKey } = useApiKey();
   const router = useRouter();
+
+  useEffect(() => {
+    if (apiKey) {
+      router.replace('/');
+    }
+  }, [apiKey, router]);
 
   const handleLogin = (e) => {
     e.preventDefault();
